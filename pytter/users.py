@@ -14,7 +14,7 @@ import os
 class User():
     def __init__(self, BEARER_TOKEN, fields=['id','created_at', 'description']):
         self.headers = {"Authorization": "Bearer {bearer_token}".format(bearer_token=BEARER_TOKEN)}
-        self.user_fields = "user.fields="+','.join(mylist)
+        self.user_fields = "user.fields="+','.join(fields)
         self.url = "https://api.twitter.com/2/users/by?{usernames}&"+self.user_fields
 
     def target(self, username):
