@@ -16,12 +16,20 @@ class User():
         self.user_fields = "user.fields="+','.join(fields)
         self.url = "https://api.twitter.com/2/users/by?{usernames}&"+self.user_fields
 
-    def target(self, username):
-        self.username = username
 
-
-    def getUserInfo(self):
-        response = requests.request("GET", self.url.format(usernames=self.username), headers=self.headers)
+    def getUsersInfo(self, usernames, users_fields= [
+            'created_at','description','entities','id','location','name',
+            'pinned_tweet_id','profile_image_url','protected','public_metrics',
+            'url','username','verified'
+        ]):
+        
+        response = requests.request(
+            method = "GET",
+            url = 'https://api.twitter.com/2/users/by?usernames={usernames}'.format(usernames=usernames),
+            headers = self.headers,
+            params = 'user.fields='+','.join(users_fields)
+        )
+        
         if response.status_code != 200:
             raise Exception(
                 "Request returned an error: {} {}".format(
